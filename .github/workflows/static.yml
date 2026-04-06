@@ -33,7 +33,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular project
-        run: npm run build -- --prod --output-path=dist/ida-birthday --base-href=/ida_birthday/
+        run: npm run build -- --output-path=dist/ida-birthday --base-href=/ida_birthday/
         # Replace 'ida-birthday' with your project folder name and base href with your repo name if different
 
       - name: Upload artifact
