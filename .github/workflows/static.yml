@@ -33,12 +33,12 @@ jobs:
         run: npm ci
 
       - name: Build Angular project
-        run: npm run build -- --output-path=dist/ida-birthday --base-href=/ida_birthday/ --deploy-url=/ida_birthday/
+        run: npm run build -- --output-path=dist/ida_birthday --base-href=/ida_birthday/ --deploy-url=/ida_birthday/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist/ida-birthday'
+          path: 'dist/ida_birthday'
 
       - name: Deploy to GitHub Pages
         id: deployment
