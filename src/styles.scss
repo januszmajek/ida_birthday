@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$violet-palette,
+      tertiary: mat.$rose-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Roboto, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #fce4ec 0%, #e8eaf6 100%);
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+}
+
+.view-container {
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  padding: 2rem 1rem;
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #4a148c;
+  }
+
+  p {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .level-description {
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .placeholder-content {
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+}
