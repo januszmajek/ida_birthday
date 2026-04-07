@@ -1,10 +1,16 @@
-import { Component, inject, signal, computed, ElementRef, viewChild } from '@angular/core';
+import { Component, inject, signal, computed, ElementRef, viewChild, effect, DestroyRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GameStore } from '../../store/game.store';
 import { ProgressIndicatorComponent } from '../../components/progress-indicator.component';
+
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: (() => void) | undefined;
+  }
+}
 
 interface Song {
   videoId: string;
@@ -382,16 +388,9 @@ function shuffle<T>(arr: T[]): T[] {
               Odtwórz
             </button>
           } @else {
-            <iframe
-              #ytPlayer
-              [src]="currentEmbedUrl()"
-              width="0"
-              height="0"
-              allow="autoplay"
-              style="position: absolute; opacity: 0; pointer-events: none;"
-            ></iframe>
             <div class="now-playing">Teraz gra...</div>
           }
+          <div #ytPlayerContainer style="position: absolute; width: 0; height: 0; overflow: hidden;"></div>
         </div>
 
         <div class="answers-grid">
@@ -514,9 +513,17 @@ function shuffle<T>(arr: T[]): T[] {
 export default class Level2View {
   readonly gameStore = inject(GameStore);
   private readonly router = inject(Router);
-  private readonly sanitizer = inject(DomSanitizer);
+  private readonly destroyRef = inject(DestroyRef);
 
-  readonly ytPlayer = viewChild<ElementRef>('ytPlayer');
+  readonly ytPlayerContainer = viewChild<ElementRef>('ytPlayerContainer');
+
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      if (this.ytPlayer) {
+        try { this.ytPlayer.destroy(); } catch {}
+      }
+    });
+  }
 
   readonly labels = ['A', 'B', 'C', 'D'];
   readonly requiredCorrect = 3;
@@ -531,14 +538,85 @@ export default class Level2View {
 
   readonly currentSong = computed(() => this.playlist()[this.songIndex()]);
 
-  readonly currentEmbedUrl = computed<SafeResourceUrl>(() => {
-    const song = this.currentSong();
-    const url = `https://www.youtube.com/embed/${song.videoId}?autoplay=1&start=30&end=60&controls=0`;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  });
+  private ytPlayer: any = null;
+  private ytApiReady = false;
+  private pendingPlay = false;
+
+  private readonly loadApiEffect = effect(() => {
+    // trigger on container being available
+    this.ytPlayerContainer();
+    this.loadYTApi();
+  }, { allowSignalWrites: false });
+
+  private loadYTApi(): void {
+    if (window.YT?.Player) {
+      this.ytApiReady = true;
+      return;
+    }
+    if (document.querySelector('script[src*="youtube.com/iframe_api"]')) return;
+
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    window.onYouTubeIframeAPIReady = () => {
+      this.ytApiReady = true;
+      if (this.pendingPlay) {
+        this.pendingPlay = false;
+        this.startPlayback();
+      }
+    };
+  }
 
   play(): void {
     this.playing.set(true);
+    if (this.ytApiReady) {
+      this.startPlayback();
+    } else {
+      this.pendingPlay = true;
+    }
+  }
+
+  private startPlayback(): void {
+    const container = this.ytPlayerContainer()?.nativeElement;
+    if (!container) return;
+
+    const song = this.currentSong();
+
+    // Destroy previous player if exists
+    if (this.ytPlayer) {
+      try { this.ytPlayer.destroy(); } catch {}
+      this.ytPlayer = null;
+    }
+
+    // Create a fresh div for the player (YT API replaces it)
+    const playerDiv = document.createElement('div');
+    container.innerHTML = '';
+    container.appendChild(playerDiv);
+
+    this.ytPlayer = new window.YT.Player(playerDiv, {
+      width: 1,
+      height: 1,
+      videoId: song.videoId,
+      playerVars: {
+        autoplay: 1,
+        start: 30,
+        end: 60,
+        controls: 0,
+        playsinline: 1,
+      },
+      events: {
+        onReady: (event: any) => {
+          event.target.playVideo();
+        },
+      },
+    });
+  }
+
+  private stopPlayback(): void {
+    if (this.ytPlayer) {
+      try { this.ytPlayer.stopVideo(); } catch {}
+    }
   }
 
   selectAnswer(index: number): void {
@@ -546,6 +624,7 @@ export default class Level2View {
 
     this.answered.set(index);
     this.playing.set(false);
+    this.stopPlayback();
     const correct = index === this.currentSong().correctIndex;
 
     if (correct) {
