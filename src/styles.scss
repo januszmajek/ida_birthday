@@ -44,6 +44,22 @@ body {
   --mdc-text-button-label-text-color: #{$lily-light};
 }
 
+// Override Material form-field/input colors for dark background
+.mat-mdc-form-field {
+  --mdc-filled-text-field-input-text-color: #{$lily-light};
+  --mdc-outlined-text-field-input-text-color: #{$lily-light};
+  --mdc-outlined-text-field-label-text-color: #{rgba($off-white, 0.6)};
+  --mdc-outlined-text-field-focus-label-text-color: #{$lily-light};
+  --mdc-outlined-text-field-outline-color: #{rgba($lily, 0.4)};
+  --mdc-outlined-text-field-focus-outline-color: #{$lily-light};
+  --mdc-outlined-text-field-hover-outline-color: #{$lily};
+  --mdc-outlined-text-field-caret-color: #{$lily-light};
+
+  input.mat-mdc-input-element {
+    color: $lily-light !important;
+  }
+}
+
 // Fade-in animation for route transitions
 @keyframes fadeIn {
   from {
