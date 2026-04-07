@@ -1,5 +1,12 @@
 @use '@angular/material' as mat;
 
+// Birthday theme: black primary, lily (pink-purple) secondary
+$lily: #c879b2;
+$lily-light: #e8a8d6;
+$lily-dark: #9b4d82;
+$black: #1a1a1a;
+$off-white: #f5f0f3;
+
 html {
   @include mat.theme((
     color: (
@@ -21,9 +28,20 @@ html {
 
 body {
   font-family: Roboto, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #fce4ec 0%, #e8eaf6 100%);
-  color: #333;
+  background: linear-gradient(160deg, $black 0%, #2a1a28 50%, #1a1a2e 100%);
+  color: $off-white;
   -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+// Override Material button colors to match theme
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: #{$lily};
+  --mdc-protected-button-label-text-color: #{$black};
+}
+
+.mat-mdc-button {
+  --mdc-text-button-label-text-color: #{$lily-light};
 }
 
 .view-container {
@@ -35,7 +53,7 @@ body {
   h1 {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
-    color: #4a148c;
+    color: $lily-light;
   }
 
   p {
@@ -44,13 +62,13 @@ body {
   }
 
   .level-description {
-    color: #666;
+    color: rgba($off-white, 0.7);
     font-size: 0.95rem;
   }
 
   .placeholder-content {
-    background: rgba(255, 255, 255, 0.6);
-    border: 2px dashed #ccc;
+    background: rgba($lily, 0.1);
+    border: 2px dashed $lily-dark;
     border-radius: 12px;
     padding: 2rem;
     margin: 1.5rem 0;
