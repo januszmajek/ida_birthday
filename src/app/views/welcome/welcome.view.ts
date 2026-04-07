@@ -8,7 +8,7 @@ import { GameStore } from '../../store/game.store';
   imports: [MatButtonModule],
   template: `
     <div class="view-container" style="animation: fadeIn 0.5s ease-out">
-      <h1>Wszystkiego najlepszego, Idu!</h1>
+      <h1>Wszystkiego najlepszego, Kochanie!</h1>
       <p>
         Przygotowaliśmy dla Ciebie 3 mini-gry. Ukończ je wszystkie, aby
         odblokować niespodziankę!

@@ -7,8 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { GameStore } from '../../store/game.store';
 import { ProgressIndicatorComponent } from '../../components/progress-indicator.component';
 
-const REBUS_IMAGE = 'https://picsum.photos/seed/rebus/400/300';
-const CORRECT_ANSWER = 'sunset';
+const REBUS_IMAGE = 'krokiecik.png';
+const CORRECT_ANSWER = 'krokiecik';
 
 @Component({
   selector: 'app-level3',

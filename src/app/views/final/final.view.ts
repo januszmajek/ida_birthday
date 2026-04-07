@@ -11,7 +11,7 @@ import { GameStore } from '../../store/game.store';
     <div class="view-container final-view">
       <div class="confetti">🎉🎊🥳🎂🎈</div>
 
-      <h1>Gratulacje, Idu!</h1>
+      <h1>Gratulacje, Krokieciku!</h1>
       <p class="subtitle">Ukończyłaś wszystkie 3 mini-gry!</p>
       <p class="score">Twój wynik: {{ gameStore.totalScore() }} pkt</p>
 
