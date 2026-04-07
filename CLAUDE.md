@@ -15,6 +15,11 @@
 - All UI content in Polish
 - All code (variables, functions, comments) in English
 
+## Design
+- Primary color: black
+- Secondary color: lily (pink/purple)
+- Birthday party tone & feel throughout
+
 ## Rules
 - Use signal-based approach whenever possible (signal inputs, computed signals, effect, model signals)
 - Lifecycle hooks are FORBIDDEN - use signals/effects instead
