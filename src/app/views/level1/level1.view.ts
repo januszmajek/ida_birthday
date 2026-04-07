@@ -13,21 +13,21 @@ interface Question {
 
 const QUESTIONS: Question[] = [
   {
-    image: 'https://picsum.photos/seed/paris/400/300',
-    text: 'Gdzie zrobiono to zdjęcie?',
-    answers: ['Londyn', 'Paryż', 'Berlin', 'Rzym'],
+    image: 'randka.jpg',
+    text: 'Z jakiej okazji byliśmy wtedy w Panczo?',
+    answers: ['Byliśmy głodni po szpachlowaniu ściany', 'Obiadek po pierwszej wyprawie na Ślężę', 'Druga randka', 'Tako spontan bez okazji'],
     correctIndex: 1,
   },
   {
-    image: 'https://picsum.photos/seed/beach/400/300',
-    text: 'Co przedstawia to zdjęcie?',
-    answers: ['Góry', 'Las', 'Plaża', 'Pustynia'],
+    image: 'skorupka-slub.jpg',
+    text: 'Z czyjego wesela jest to zdjęcie?',
+    answers: ['Ania i Marcin', 'Michalina i Hubert', 'Ala i Mikołaj', 'Naszego'],
     correctIndex: 2,
   },
   {
-    image: 'https://picsum.photos/seed/city/400/300',
-    text: 'Jaki to krajobraz?',
-    answers: ['Wieś', 'Miasto', 'Morze', 'Jezioro'],
+    image: 'naklejka.jpg',
+    text: 'Gdzie zostało zrobione to słynne zdjęcie, z którego powsytała jeszcze słynniejsza naklejka?',
+    answers: ['W słubicach', 'Obiadek w zaułku w Szklarskiej porębie', 'W Obornikach', 'W mieszkaniu na wielkiej'],
     correctIndex: 1,
   },
 ];
@@ -100,8 +100,7 @@ const QUESTIONS: Question[] = [
 
     .quiz-image {
       width: 100%;
-      max-height: 220px;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 8px;
       margin-bottom: 1rem;
     }
