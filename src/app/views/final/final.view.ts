@@ -101,7 +101,8 @@ export default class FinalView {
 
   downloadVoucher(): void {
     const link = document.createElement('a');
-    link.href = 'voucher.pdf';
+    const baseHref = document.querySelector('base')?.getAttribute('href') || '/';
+    link.href = `${baseHref}voucher.pdf`;
     link.download = 'voucher-urodzinowy.pdf';
     link.click();
   }
