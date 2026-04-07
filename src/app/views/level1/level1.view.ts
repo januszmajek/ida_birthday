@@ -2,6 +2,7 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { GameStore } from '../../store/game.store';
+import { ProgressIndicatorComponent } from '../../components/progress-indicator.component';
 
 interface Question {
   image: string;
@@ -33,9 +34,10 @@ const QUESTIONS: Question[] = [
 
 @Component({
   selector: 'app-level1',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, ProgressIndicatorComponent],
   template: `
-    <div class="view-container">
+    <div class="view-container" style="animation: fadeIn 0.5s ease-out">
+      <app-progress />
       <h1>Poziom 1: Skąd to zdjęcie?</h1>
       <p class="level-description">Rozpoznaj miejsca na zdjęciach.</p>
 

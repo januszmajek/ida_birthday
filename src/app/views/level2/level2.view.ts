@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GameStore } from '../../store/game.store';
+import { ProgressIndicatorComponent } from '../../components/progress-indicator.component';
 
 interface Song {
   videoId: string;
@@ -72,9 +73,10 @@ function shuffle<T>(arr: T[]): T[] {
 
 @Component({
   selector: 'app-level2',
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, ProgressIndicatorComponent],
   template: `
-    <div class="view-container">
+    <div class="view-container" style="animation: fadeIn 0.5s ease-out">
+      <app-progress />
       <h1>Poziom 2: Jaka to melodia?</h1>
       <p class="level-description">Posłuchaj i zgadnij utwór.</p>
 
