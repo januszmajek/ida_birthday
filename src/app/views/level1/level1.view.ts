@@ -114,15 +114,19 @@ const QUESTIONS: Question[] = [
     .answers-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
       gap: 0.5rem;
+      height: 152px;
     }
 
     .answer-btn {
-      text-align: left;
-      font-size: 0.85rem;
-      white-space: normal;
-      line-height: 1.3;
-      min-height: 48px;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 0.78rem;
+      white-space: normal !important;
+      line-height: 1.25;
+      overflow: hidden;
 
       &.correct {
         background-color: #4caf50 !important;
